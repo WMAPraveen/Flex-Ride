@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:car_rental_app/features/vehicledetails/ratingpage.dart';
-import 'package:car_rental_app/features/vehicledetails/vehicledetails.dart';
+import 'package:flex_ride/features/vehicledetails/ratingpage.dart';
+import 'package:flex_ride/features/vehicledetails/vehicledetails.dart';
 import 'package:flutter/material.dart';
 
 class Shope extends StatefulWidget {
