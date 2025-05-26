@@ -149,3 +149,63 @@ class VehicleDetails extends StatelessWidget {
     );
   }
 }
+
+// Spec Card Widget
+class _SpecCard extends StatelessWidget {
+  final String title;
+  final String subtitle;
+
+  const _SpecCard({required this.title, required this.subtitle});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.grey[900],
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 18,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            subtitle,
+            style: const TextStyle(color: Colors.white70, fontSize: 14),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// Feature Icon Widget
+class _FeatureIcon extends StatelessWidget {
+  final IconData icon;
+  final String label;
+
+  const _FeatureIcon({required this.icon, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Icon(icon, size: 32, color: const Color.fromARGB(255, 0, 0, 0)),
+        const SizedBox(height: 4),
+        Text(
+          label,
+          style: const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+        ),
+      ],
+    );
+  }
+}
