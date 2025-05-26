@@ -1,3 +1,4 @@
+
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -113,21 +114,69 @@ class _ShopeState extends State<Shope> with SingleTickerProviderStateMixin {
                     context,
                     MaterialPageRoute(
                       builder: (_) => VehicleDetails(
+                         vehicleId: vehicleId,
                         vehicleName: vehicleName,
-                        // Pass vehicleId instead of userId
-                        // Assuming VehicleDetails can use vehicleId to fetch details
+                         imageBase64: imageBase64,
                       ),
                     ),
                   );
                 },
                 child: Card(
-                  child: ListTile(
-                    title: Text(vehicleName),
-                    subtitle: Text(vehicleDescription),
-                    leading: vehicleImage != null
-                        ? Image(image: vehicleImage, width: 50, height: 50, fit: BoxFit.cover)
-                        : const Icon(Icons.directions_car),
+                  elevation: 3,
+                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
+                 child: SizedBox(
+  height: 180,
+  child: Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      vehicleImage != null
+          ? Container(
+              height: 130,
+              width: 200,
+              margin: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                image: DecorationImage(
+                  image: vehicleImage,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            )
+          : const Icon(
+              Icons.directions_car,
+              size: 120,
+            ),
+      Expanded(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                vehicleName,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                vehicleDescription,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
+        ),
+      ),
+    ],
+  ),
+),
+
+
                 ),
               );
             },

@@ -1,5 +1,5 @@
 
-import 'package:car_rental_app/features/auth/screen/Loadingscreen.dart';
+import 'package:flex_ride/features/auth/screen/Loadingscreen.dart';
 // import 'package:car_rental_app/features/auth/screen/location_screen.dart';
 // import 'package:car_rental_app/features/auth/screen/signin.dart';
 
