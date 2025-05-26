@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "841659329811",
+    "project_id": "flex-ride-c62ee",
+    "storage_bucket": "flex-ride-c62ee.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:841659329811:android:533bcb604457c2ed1d7ee6",
+        "android_client_info": {
+          "package_name": "com.example.car_rental_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "841659329811-09h9nc3d5e2aus6kifl0f142vfjngvkb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8VZBU2G3aECRH1pBOdg2-77w8RK-ylYY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "841659329811-09h9nc3d5e2aus6kifl0f142vfjngvkb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "841659329811-vgqo19c3u6el5adeskv9d3l2qo00gb9l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.carRentalApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:841659329811:android:79e0d806063e60a31d7ee6",
+        "android_client_info": {
+          "package_name": "com.example.flex_ride"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "841659329811-09h9nc3d5e2aus6kifl0f142vfjngvkb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8VZBU2G3aECRH1pBOdg2-77w8RK-ylYY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "841659329811-09h9nc3d5e2aus6kifl0f142vfjngvkb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "841659329811-vgqo19c3u6el5adeskv9d3l2qo00gb9l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.carRentalApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
