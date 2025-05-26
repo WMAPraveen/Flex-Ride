@@ -1,13 +1,33 @@
+
+import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'bookpage.dart';
 
 class VehicleDetails extends StatelessWidget {
+  final String vehicleId;
   final String vehicleName;
+  final String? imageBase64;
 
-  const VehicleDetails({Key? key, required this.vehicleName}) : super(key: key);
+  const VehicleDetails({
+    Key? key,
+    required this.vehicleId,
+    required this.vehicleName,
+    this.imageBase64,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    ImageProvider? coverImage;
+    if (imageBase64 != null && imageBase64!.isNotEmpty) {
+      try {
+        final imageBytes = base64Decode(imageBase64!);
+        coverImage = MemoryImage(imageBytes);
+      } catch (e) {
+        print('Error decoding vehicle image: $e');
+      }
+    }
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -18,16 +38,27 @@ class VehicleDetails extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   height: 220,
-                  color: Colors.grey[300],
-                  child: const Center(
-                    child: Text(
-                      'Cover Image',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    image: coverImage != null
+                        ? DecorationImage(
+                            image: coverImage,
+                            fit: BoxFit.cover,
+                          )
+                        : null,
                   ),
+                  child: coverImage == null
+                      ? const Center(
+                          child: Text(
+                            'No Image Available',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        )
+                      : null,
                 ),
                 Positioned(
                   top: 10,
@@ -62,7 +93,66 @@ class VehicleDetails extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Vehicle Name
+                  Text(
+                    vehicleName,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+
+                  // Fetch Dynamic Description
+                  FutureBuilder<DocumentSnapshot>(
+                    future: FirebaseFirestore.instance
+                        .collection('vehicles')
+                        .doc(vehicleId)
+                        .get(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      if (snapshot.hasError || !snapshot.hasData || !snapshot.data!.exists) {
+                        return const Text(
+                          'Description: Not available',
+                          style: TextStyle(fontSize: 16, color: Colors.black87),
+                        );
+                      }
+                      final vehicleData = snapshot.data!.data() as Map<String, dynamic>;
+                      final description = vehicleData['description'] ?? 'No description';
+                      final pricePerDay = vehicleData['pricePerDay']?.toStringAsFixed(2) ?? 'N/A';
+
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Description: $description',
+                            style: const TextStyle(fontSize: 16, color: Colors.black87),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Price: \$$pricePerDay/day',
+                            style: const TextStyle(fontSize: 16, color: Colors.black87),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+
+                  const SizedBox(height: 24),
+
                   // Vehicle Specs Grid
+                  const Text(
+                    'Vehicle Specs',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
                   GridView.count(
                     crossAxisCount: 2,
                     shrinkWrap: true,
@@ -80,17 +170,16 @@ class VehicleDetails extends StatelessWidget {
 
                   const SizedBox(height: 24),
 
+                  // Car Features
                   const Text(
                     'Car Features',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                   ),
                   const SizedBox(height: 16),
-
-                  // Car Features Grid
                   GridView.count(
                     crossAxisCount: 3,
                     shrinkWrap: true,
@@ -101,10 +190,7 @@ class VehicleDetails extends StatelessWidget {
                     children: const [
                       _FeatureIcon(icon: Icons.ac_unit, label: 'Snow Tires'),
                       _FeatureIcon(icon: Icons.people, label: '5 Passengers'),
-                      _FeatureIcon(
-                        icon: Icons.door_front_door,
-                        label: '4 Doors',
-                      ),
+                      _FeatureIcon(icon: Icons.door_front_door, label: '4 Doors'),
                       _FeatureIcon(icon: Icons.gps_fixed, label: 'GPS'),
                       _FeatureIcon(icon: Icons.bluetooth, label: 'Bluetooth'),
                       _FeatureIcon(icon: Icons.directions_car, label: 'Auto'),
@@ -117,7 +203,6 @@ class VehicleDetails extends StatelessWidget {
                   Center(
                     child: ElevatedButton(
                       onPressed: () {
-                        // Navigate to BookNowPage when Book Now is pressed
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -126,17 +211,19 @@ class VehicleDetails extends StatelessWidget {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+                        backgroundColor: Colors.black,
+                        foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(
                           horizontal: 24,
                           vertical: 12,
                         ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
                       child: const Text(
                         'Book Now',
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                        ),
+                        style: TextStyle(fontSize: 16),
                       ),
                     ),
                   ),
@@ -199,11 +286,11 @@ class _FeatureIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Icon(icon, size: 32, color: const Color.fromARGB(255, 0, 0, 0)),
+        Icon(icon, size: 32, color: Colors.black),
         const SizedBox(height: 4),
         Text(
           label,
-          style: const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+          style: const TextStyle(color: Colors.black, fontSize: 12),
         ),
       ],
     );
