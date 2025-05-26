@@ -1,4 +1,3 @@
-import 'package:car_rental_app/features/auth/screen/signin.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -32,13 +31,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
     // Initialize Google Sign-In with different configurations for web and mobile
     if (kIsWeb) {
       _googleSignIn = GoogleSignIn(
-        clientId: 'YOUR_WEB_CLIENT_ID.apps.googleusercontent.com', // Replace with your web client ID
+        clientId:
+            'YOUR_WEB_CLIENT_ID.apps.googleusercontent.com', // Replace with your web client ID
         scopes: ['email', 'profile'],
       );
     } else {
-      _googleSignIn = GoogleSignIn(
-        scopes: ['email', 'profile'],
-      );
+      _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);
     }
   }
 
@@ -62,13 +60,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
           .collection('users')
           .doc(userCredential.user!.uid)
           .set({
-        'email': email,
-        'name': _nameController.text.trim(),
-        'role': _selectedRole.toLowerCase(),
-        'createdAt': FieldValue.serverTimestamp(),
-        'isAdmin': false,
-        'authProvider': 'email',
-      });
+            'email': email,
+            'name': _nameController.text.trim(),
+            'role': _selectedRole.toLowerCase(),
+            'createdAt': FieldValue.serverTimestamp(),
+            'isAdmin': false,
+            'authProvider': 'email',
+          });
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -121,10 +119,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     try {
       // Sign out first to ensure account picker shows up
       await _googleSignIn.signOut();
-      
+
       // Trigger the authentication flow
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      
+
       if (googleUser == null) {
         // User canceled the sign-in
         setState(() {
@@ -134,7 +132,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       }
 
       // Obtain the auth details from the request
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
 
       // Create a new credential
       final credential = GoogleAuthProvider.credential(
@@ -143,11 +142,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
       );
 
       // Sign in to Firebase with the Google credential
-      final UserCredential userCredential = 
-          await FirebaseAuth.instance.signInWithCredential(credential);
+      final UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithCredential(credential);
 
       // Check if this is a new user
-      final bool isNewUser = userCredential.additionalUserInfo?.isNewUser ?? false;
+      final bool isNewUser =
+          userCredential.additionalUserInfo?.isNewUser ?? false;
 
       if (isNewUser) {
         // Create user document in Firestore for new users
@@ -155,14 +155,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
             .collection('users')
             .doc(userCredential.user!.uid)
             .set({
-          'email': userCredential.user!.email,
-          'name': userCredential.user!.displayName ?? '',
-          'role': _selectedRole.toLowerCase(),
-          'createdAt': FieldValue.serverTimestamp(),
-          'isAdmin': false,
-          'authProvider': 'google',
-          'photoURL': userCredential.user!.photoURL,
-        });
+              'email': userCredential.user!.email,
+              'name': userCredential.user!.displayName ?? '',
+              'role': _selectedRole.toLowerCase(),
+              'createdAt': FieldValue.serverTimestamp(),
+              'isAdmin': false,
+              'authProvider': 'google',
+              'photoURL': userCredential.user!.photoURL,
+            });
 
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -185,7 +185,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         context,
         MaterialPageRoute(builder: (context) => const SignInScreen()),
       );
-
     } catch (error) {
       print('Google Sign-In Error: $error');
       ScaffoldMessenger.of(context).showSnackBar(
@@ -301,15 +300,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     dropdownColor: Colors.grey[800],
                     style: const TextStyle(color: Colors.white),
-                    items: ['Renter', 'Lister'].map((role) {
-                      return DropdownMenuItem<String>(
-                        value: role,
-                        child: Text(role),
-                      );
-                    }).toList(),
-                    onChanged: _isLoading
-                        ? null
-                        : (value) => setState(() {
+                    items:
+                        ['Renter', 'Lister'].map((role) {
+                          return DropdownMenuItem<String>(
+                            value: role,
+                            child: Text(role),
+                          );
+                        }).toList(),
+                    onChanged:
+                        _isLoading
+                            ? null
+                            : (value) => setState(() {
                               _selectedRole = value!;
                             }),
                   ),
@@ -321,15 +322,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     children: [
                       Checkbox(
                         value: _agreeToTerms,
-                        onChanged: _isLoading
-                            ? null
-                            : (value) => setState(() {
+                        onChanged:
+                            _isLoading
+                                ? null
+                                : (value) => setState(() {
                                   _agreeToTerms = value!;
                                 }),
                         checkColor: Colors.white,
                         activeColor: const Color(0xFFE74D3D),
                       ),
-                      const Text('Agree with ', style: TextStyle(color: Colors.white)),
+                      const Text(
+                        'Agree with ',
+                        style: TextStyle(color: Colors.white),
+                      ),
                       GestureDetector(
                         onTap: () {},
                         child: const Text(
@@ -347,41 +352,42 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                   // SIGN UP Button
                   ElevatedButton(
-                    onPressed: _isLoading
-                        ? null
-                        : () async {
-                            if (_formKey.currentState!.validate()) {
-                              if (_nameController.text.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Please enter your name'),
-                                    backgroundColor: Colors.grey,
-                                  ),
-                                );
-                                return;
-                              }
-
-                              if (!_agreeToTerms) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: const Text(
-                                      'Please agree to the Terms & Conditions',
-                                      style: TextStyle(color: Colors.white),
+                    onPressed:
+                        _isLoading
+                            ? null
+                            : () async {
+                              if (_formKey.currentState!.validate()) {
+                                if (_nameController.text.isEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Please enter your name'),
+                                      backgroundColor: Colors.grey,
                                     ),
-                                    backgroundColor: Colors.grey[800],
-                                  ),
-                                );
-                                return;
+                                  );
+                                  return;
+                                }
+
+                                if (!_agreeToTerms) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: const Text(
+                                        'Please agree to the Terms & Conditions',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      backgroundColor: Colors.grey[800],
+                                    ),
+                                  );
+                                  return;
+                                }
+
+                                _formKey.currentState!.save();
+
+                                final email = _emailController.text.trim();
+                                final password = _passwordController.text;
+
+                                await _handleSubmit(email, password);
                               }
-
-                              _formKey.currentState!.save();
-
-                              final email = _emailController.text.trim();
-                              final password = _passwordController.text;
-
-                              await _handleSubmit(email, password);
-                            }
-                          },
+                            },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFE74D3D),
                       padding: const EdgeInsets.symmetric(vertical: 16),
@@ -389,23 +395,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),
-                    child: _isLoading
-                        ? const SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: Colors.white,
+                    child:
+                        _isLoading
+                            ? const SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
+                            )
+                            : const Text(
+                              'SIGN UP',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          )
-                        : const Text(
-                            'SIGN UP',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
                   ),
 
                   const SizedBox(height: 24),
@@ -416,7 +423,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Expanded(child: Divider(color: Colors.grey[600])),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Text('or sign up with', style: TextStyle(color: Colors.grey[600])),
+                        child: Text(
+                          'or sign up with',
+                          style: TextStyle(color: Colors.grey[600]),
+                        ),
                       ),
                       Expanded(child: Divider(color: Colors.grey[600])),
                     ],
@@ -431,16 +441,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       _buildSocialButton(Icons.apple, () {
                         // Apple Sign-In implementation can be added here
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Apple Sign-In not implemented yet')),
+                          const SnackBar(
+                            content: Text('Apple Sign-In not implemented yet'),
+                          ),
                         );
                       }),
                       const SizedBox(width: 16),
-                      _buildSocialButton(Icons.g_mobiledata, _handleGoogleSignIn),
+                      _buildSocialButton(
+                        Icons.g_mobiledata,
+                        _handleGoogleSignIn,
+                      ),
                       const SizedBox(width: 16),
                       _buildSocialButton(Icons.facebook, () {
                         // Facebook Sign-In implementation can be added here
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Facebook Sign-In not implemented yet')),
+                          const SnackBar(
+                            content: Text(
+                              'Facebook Sign-In not implemented yet',
+                            ),
+                          ),
                         );
                       }),
                     ],
@@ -487,9 +506,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
           color: _isLoading ? Colors.grey[700] : Colors.grey[800],
         ),
         child: Icon(
-          icon, 
-          color: _isLoading ? Colors.grey[500] : Colors.white, 
-          size: 30
+          icon,
+          color: _isLoading ? Colors.grey[500] : Colors.white,
+          size: 30,
         ),
       ),
     );
