@@ -1,10 +1,10 @@
 import 'dart:ui';
-import 'package:car_rental_app/features/auth/screen/signin.dart';
-import 'package:car_rental_app/features/lister/add_vehicle_screen.dart';
-import 'package:car_rental_app/features/lister/edit_profile_screen.dart';
+import 'package:flex_ride/features/auth/screen/signin.dart';
+import 'package:flex_ride/features/lister/add_vehicle_screen.dart';
+import 'package:flex_ride/features/lister/edit_profile_screen.dart';
 // Make sure the file path and class name are correct. If the class is named differently, update it accordingly.
-import 'package:car_rental_app/features/lister/vehicle_list_screen.dart';
-import 'package:car_rental_app/models/vehicle.dart' as vehicle_model;
+import 'package:flex_ride/features/lister/vehicle_list_screen.dart';
+import 'package:flex_ride/models/vehicle.dart' as vehicle_model;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

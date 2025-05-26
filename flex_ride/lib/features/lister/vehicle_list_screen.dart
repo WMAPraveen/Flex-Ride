@@ -1,6 +1,6 @@
 import 'dart:convert'; // Add this for base64Decode
 import 'package:flutter/material.dart';
-import 'package:car_rental_app/models/vehicle.dart';
+import 'package:flex_ride/models/vehicle.dart';
 
 class VehicleListScreen extends StatelessWidget {
   final List<Vehicle> vehicles;
