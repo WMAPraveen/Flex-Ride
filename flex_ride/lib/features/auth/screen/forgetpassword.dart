@@ -38,4 +38,25 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
             backgroundColor: Colors.grey,
           ),
         );
-        
+        // Navigate back to Sign In screen after successful email send
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const SignInScreen()),
+        );
+      } on FirebaseAuthException catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              e.message ?? 'Failed to send reset email',
+              style: const TextStyle(color: Colors.white),
+            ),
+            backgroundColor: Colors.grey[800],
+          ),
+        );
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
