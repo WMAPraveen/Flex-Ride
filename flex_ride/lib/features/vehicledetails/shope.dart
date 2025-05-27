@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -42,11 +41,12 @@ class _ShopeState extends State<Shope> with SingleTickerProviderStateMixin {
 
   Future<void> _fetchListerUserId() async {
     try {
-      final userSnapshot = await FirebaseFirestore.instance
-          .collection('users')
-          .where('name', isEqualTo: widget.title)
-          .limit(1)
-          .get();
+      final userSnapshot =
+          await FirebaseFirestore.instance
+              .collection('users')
+              .where('name', isEqualTo: widget.title)
+              .limit(1)
+              .get();
       if (userSnapshot.docs.isNotEmpty) {
         setState(() {
           _listerUserId = userSnapshot.docs.first.id;
@@ -92,10 +92,12 @@ class _ShopeState extends State<Shope> with SingleTickerProviderStateMixin {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: vehicles.length,
             itemBuilder: (context, index) {
-              final vehicleData = vehicles[index].data() as Map<String, dynamic>;
+              final vehicleData =
+                  vehicles[index].data() as Map<String, dynamic>;
               final vehicleId = vehicles[index].id;
               final vehicleName = vehicleData['name'] ?? 'Unknown Vehicle';
-              final vehicleDescription = vehicleData['description'] ?? 'No description';
+              final vehicleDescription =
+                  vehicleData['description'] ?? 'No description';
               final imageBase64 = vehicleData['imageBase64'] as String?;
 
               ImageProvider? vehicleImage;
@@ -113,11 +115,12 @@ class _ShopeState extends State<Shope> with SingleTickerProviderStateMixin {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => VehicleDetails(
-                         vehicleId: vehicleId,
-                        vehicleName: vehicleName,
-                         imageBase64: imageBase64,
-                      ),
+                      builder:
+                          (_) => VehicleDetails(
+                            vehicleId: vehicleId,
+                            vehicleName: vehicleName,
+                            imageBase64: imageBase64,
+                          ),
                     ),
                   );
                 },
@@ -127,56 +130,54 @@ class _ShopeState extends State<Shope> with SingleTickerProviderStateMixin {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
-                 child: SizedBox(
-  height: 180,
-  child: Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      vehicleImage != null
-          ? Container(
-              height: 130,
-              width: 200,
-              margin: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                image: DecorationImage(
-                  image: vehicleImage,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            )
-          : const Icon(
-              Icons.directions_car,
-              size: 120,
-            ),
-      Expanded(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                vehicleName,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                vehicleDescription,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ),
-        ),
-      ),
-    ],
-  ),
-),
-
-
+                  child: SizedBox(
+                    height: 180,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        vehicleImage != null
+                            ? Container(
+                              height: 130,
+                              width: 200,
+                              margin: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                image: DecorationImage(
+                                  image: vehicleImage,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            )
+                            : const Icon(Icons.directions_car, size: 120),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 12.0,
+                              horizontal: 8.0,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  vehicleName,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  vehicleDescription,
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               );
             },
@@ -215,24 +216,26 @@ class _ShopeState extends State<Shope> with SingleTickerProviderStateMixin {
                         height: 220,
                         decoration: BoxDecoration(
                           color: Colors.grey[300],
-                          image: coverImage != null
-                              ? DecorationImage(
-                                  image: coverImage,
-                                  fit: BoxFit.cover,
-                                )
-                              : null,
+                          image:
+                              coverImage != null
+                                  ? DecorationImage(
+                                    image: coverImage,
+                                    fit: BoxFit.cover,
+                                  )
+                                  : null,
                         ),
-                        child: coverImage == null
-                            ? const Center(
-                                child: Text(
-                                  'Cover Image',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
+                        child:
+                            coverImage == null
+                                ? const Center(
+                                  child: Text(
+                                    'Cover Image',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                              )
-                            : null,
+                                )
+                                : null,
                       ),
                       Positioned(
                         right: 16,
@@ -245,7 +248,9 @@ class _ShopeState extends State<Shope> with SingleTickerProviderStateMixin {
                               backgroundColor: Colors.black,
                               foregroundColor: Colors.white,
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 6),
+                                horizontal: 12,
+                                vertical: 6,
+                              ),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
@@ -254,9 +259,7 @@ class _ShopeState extends State<Shope> with SingleTickerProviderStateMixin {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                  builder: (_) => RatingPage(),
-                                ),
+                                MaterialPageRoute(builder: (_) => RatingPage()),
                               );
                             },
                             child: const Text(
@@ -274,7 +277,9 @@ class _ShopeState extends State<Shope> with SingleTickerProviderStateMixin {
                     child: Text(
                       widget.title,
                       style: const TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.bold),
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -295,9 +300,13 @@ class _ShopeState extends State<Shope> with SingleTickerProviderStateMixin {
                       unselectedLabelColor: Colors.black,
                       indicatorColor: const Color(0xFFE74D3D),
                       indicatorWeight: 3,
-                      labelStyle:
-                          const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                      labelPadding: const EdgeInsets.symmetric(horizontal: 24.0),
+                      labelStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      labelPadding: const EdgeInsets.symmetric(
+                        horizontal: 24.0,
+                      ),
                       tabs: tabs.map((tab) => Tab(text: tab)).toList(),
                     ),
                   ),
@@ -305,7 +314,8 @@ class _ShopeState extends State<Shope> with SingleTickerProviderStateMixin {
                     height: 400,
                     child: TabBarView(
                       controller: _tabController,
-                      children: tabs.map((tab) => buildTabContent(tab)).toList(),
+                      children:
+                          tabs.map((tab) => buildTabContent(tab)).toList(),
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -324,7 +334,11 @@ class _ShopeState extends State<Shope> with SingleTickerProviderStateMixin {
                     child: const SizedBox(
                       width: 36,
                       height: 36,
-                      child: Icon(Icons.arrow_back, color: Colors.white, size: 20),
+                      child: Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                        size: 20,
+                      ),
                     ),
                   ),
                 ),
