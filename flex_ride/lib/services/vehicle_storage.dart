@@ -18,4 +18,3 @@ class VehicleStorage {
     return jsonList.map((json) => Vehicle.fromJson(jsonDecode(json))).toList();
   }
 }
-
