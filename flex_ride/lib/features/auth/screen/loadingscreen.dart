@@ -31,4 +31,37 @@ class _LoadingScreenState extends State<LoadingScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            
+            // Placeholder image from assets with error handling
+            Image.asset(
+              'assets/loading.jpg',
+              width: 300,
+              height: 300,
+              errorBuilder: (context, error, stackTrace) {
+                return const Text(
+                  'Image failed to load',
+                  style: TextStyle(color: Colors.white),
+                );
+              },
+            ),
+            // const SizedBox(height: 24),
+            // Loading text
+            // const Text(
+            //   'Loading...',
+            //   style: TextStyle(
+            //     color: Colors.white,
+            //     fontSize: 20,
+            //     fontWeight: FontWeight.bold,
+            //   ),
+            // ),
+            // const SizedBox(height: 16),
+            // Pink CircularProgressIndicator
+            // const CircularProgressIndicator(
+            //   valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFE74D3D)),
+            //   strokeWidth: 3,
+            // ),
+          ],
+        ),
+      ),
+    );
+  }
+}
