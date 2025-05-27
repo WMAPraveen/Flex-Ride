@@ -92,3 +92,67 @@ class _SignInScreenState extends State<SignInScreen> {
                   passwordController: _passwordController,
                   formKey: _formKey,
                 ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: _rememberMe,
+                          onChanged: _isLoading ? null : (value) => setState(() => _rememberMe = value ?? false),
+                          activeColor: const Color(0xFFE74D3D),
+                          checkColor: Colors.white,
+                        ),
+                        const Text('Remember me', style: TextStyle(color: Colors.white)),
+                      ],
+                    ),
+                    TextButton(
+                      onPressed: _isLoading
+                          ? null
+                          : () => Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (_) => const ForgetPasswordScreen()),
+                              ),
+                      child: const Text('Forgot password...', style: TextStyle(color: Color(0xFFE74D3D))),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 24),
+                ElevatedButton(
+                  onPressed: _isLoading
+                      ? null
+                      : () async {
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
+
+                            final email = _emailController.text.trim();
+                            final password = _passwordController.text;
+
+                            setState(() => _isLoading = true);
+                            try {
+                              final userCredential = await FirebaseAuth.instance
+                                  .signInWithEmailAndPassword(email: email, password: password);
+                              _handleAuthNavigation(userCredential);
+                            } on FirebaseAuthException catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(e.message ?? 'Sign-in failed')),
+                              );
+                            } finally {
+                              setState(() => _isLoading = false);
+                            }
+                          }
+                        },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFE74D3D),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                  ),
+                  child: _isLoading
+                      ? const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                        )
+                      : const Text('Sign In', style: TextStyle(color: Colors.white)),
+                ),
