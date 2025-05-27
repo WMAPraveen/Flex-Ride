@@ -260,18 +260,13 @@ class _ShopeState extends State<Shope> with SingleTickerProviderStateMixin {
                             onPressed: () {
                               Navigator.push(
                                 context,
-
                                 MaterialPageRoute(
-                                  builder:
-                                      (_) => RatingPage(
-                                        title: widget.title,
-                                        location: widget.location,
-                                        coverPicture: widget.coverPicture,
-                                      ),
+                                  builder: (_) => RatingPage(
+                                    title: widget.title,
+                                    location: widget.location,
+                                    coverPicture: widget.coverPicture,
+                                  ),
                                 ),
-=======
-                                MaterialPageRoute(builder: (_) => RatingPage()),
-
                               );
                             },
                             child: const Text(
