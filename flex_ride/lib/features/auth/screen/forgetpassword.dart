@@ -160,3 +160,41 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                             ),
                           ),
                   ),
+                  const SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Remembered your password? ',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      GestureDetector(
+                        onTap: _isLoading
+                            ? null
+                            : () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const SignInScreen(),
+                                  ),
+                                );
+                              },
+                        child: const Text(
+                          'Sign In',
+                          style: TextStyle(
+                            color: Color(0xFFE74D3D),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
