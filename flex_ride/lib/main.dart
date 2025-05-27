@@ -8,8 +8,8 @@ import 'package:flex_ride/features/auth/screen/Loadingscreen.dart';
 // import 'package:car_rental_app/features/auth/screen/signin.dart';
 
 // import 'package:car_rental_app/features/auth/screen/welcomescreen.dart';
-// import 'package:car_rental_app/features/home/home.dart';
-// import 'package:car_rental_app/features/lister/listerdashboardscreen.dart';
+import 'package:flex_ride/features/home/home.dart';
+import 'package:flex_ride/features/lister/listerdashboardscreen.dart';
 // import 'package:car_rental_app/features/home/home.dart';
 // import 'package:car_rental_app/features/auth/screen/dashboard_screen.dart';
 // import 'package:car_rental_app/features/lister/listerdashboardscreen.dart';
@@ -17,7 +17,6 @@ import 'package:flex_ride/features/auth/screen/Loadingscreen.dart';
 // import 'package:car_rental_app/features/home/home.dart';
 // import 'package:car_rental_app/features/vehicledetails/vehicledetailsscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flex_ride/features/auth/screen/loadingscreen.dart';
 import 'package:flutter/material.dart';
 // import 'features/auth/screen/signin.dart';
 import 'firebase_options.dart';
