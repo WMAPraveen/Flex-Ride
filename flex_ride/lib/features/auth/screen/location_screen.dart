@@ -21,4 +21,14 @@ class LocationScreen extends StatelessWidget {
             return Center(child: Text("Error getting location"));
           }
 
-          
+          return Center(
+            child: Text(
+              "Your City: ${snapshot.data}",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
