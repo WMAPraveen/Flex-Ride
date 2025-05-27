@@ -108,7 +108,7 @@ class _HomeContentState extends State<HomeContent> {
 
         _scrollController.animateTo(
           _scrollPosition,
-          duration: const Duration(milliseconds: 700),
+          duration: const Duration(milliseconds: 1500),
           curve: Curves.easeInOut,
         );
       }
@@ -513,17 +513,18 @@ class _HomeContentState extends State<HomeContent> {
                     Text(
                       listerName,
                       style: const TextStyle(
-                        color: Colors.grey,
+                        color: Color.fromARGB(255, 36, 0, 0),
+                         fontWeight: FontWeight.bold,
                         fontSize: 24,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '\$${vehicle.pricePerDay.toStringAsFixed(2)}/day',
+                      '\Rs:${vehicle.pricePerDay.toStringAsFixed(2)}/day',
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: Colors.black87,
+                        color: Color.fromARGB(255, 70, 70, 70),
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -532,7 +533,7 @@ class _HomeContentState extends State<HomeContent> {
                         const Icon(
                           Icons.location_on,
                           size: 16,
-                          color: Colors.grey,
+                          color: Color.fromARGB(255, 70, 70, 70),
                         ),
                         const SizedBox(width: 4),
                         Expanded(
