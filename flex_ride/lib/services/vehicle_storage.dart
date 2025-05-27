@@ -11,10 +11,11 @@ class VehicleStorage {
     await prefs.setStringList(_key, jsonList);
   }
 
-  static Future<List<Vehicle>> loadVehicles() async {
+   static Future<List<Vehicle>> loadVehicles() async {
     final prefs = await SharedPreferences.getInstance();
     final jsonList = prefs.getStringList(_key);
     if (jsonList == null) return [];
-    return jsonList.map((json) => Vehicle.fromJson(jsonDecode(json))).toList();
+    // Pass a second argument to fromJson. Replace `null` with the appropriate value if needed.
+   return jsonList.map((json) => Vehicle.fromJson(jsonDecode(json), '')).toList();
   }
 }
