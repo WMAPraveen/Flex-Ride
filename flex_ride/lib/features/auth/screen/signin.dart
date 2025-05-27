@@ -156,3 +156,27 @@ class _SignInScreenState extends State<SignInScreen> {
                         )
                       : const Text('Sign In', style: TextStyle(color: Colors.white)),
                 ),
+                const SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Don't have an account?", style: TextStyle(color: Colors.white)),
+                    TextButton(
+                      onPressed: _isLoading
+                          ? null
+                          : () => Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (_) => const SignUpScreen()),
+                              ),
+                      child: const Text('Sign up', style: TextStyle(color: Color(0xFFE74D3D))),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
