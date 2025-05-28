@@ -141,7 +141,7 @@ class _ShopeState extends State<Shope> with SingleTickerProviderStateMixin {
                               width: 200,
                               margin: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(8), 
                                 image: DecorationImage(
                                   image: vehicleImage,
                                   fit: BoxFit.cover,
