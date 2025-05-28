@@ -11,11 +11,11 @@ class Shope extends StatefulWidget {
   final String? coverPicture;
 
   const Shope({
-    Key? key,
+    super.key,
     required this.title,
     required this.location,
     this.coverPicture,
-  }) : super(key: key);
+  });
 
   @override
   State<Shope> createState() => _ShopeState();
@@ -243,7 +243,8 @@ class _ShopeState extends State<Shope> with SingleTickerProviderStateMixin {
                         child: Material(
                           elevation: 4,
                           borderRadius: BorderRadius.circular(20),
-                          child: ElevatedButton(
+                          child: // Inside Shope widget
+                              ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.black,
                               foregroundColor: Colors.white,
@@ -259,7 +260,13 @@ class _ShopeState extends State<Shope> with SingleTickerProviderStateMixin {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (_) => RatingPage()),
+                                MaterialPageRoute(
+                                  builder: (_) => RatingPage(
+                                    title: widget.title,
+                                    location: widget.location,
+                                    coverPicture: widget.coverPicture,
+                                  ),
+                                ),
                               );
                             },
                             child: const Text(
