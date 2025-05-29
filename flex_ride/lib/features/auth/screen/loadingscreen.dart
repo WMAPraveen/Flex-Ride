@@ -13,7 +13,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void initState() {
     super.initState();
     // Navigate to WelcomeScreen after 10 seconds
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 8), () {
       if (mounted) {
         Navigator.pushReplacement(
           context,
